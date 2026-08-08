@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#1c1710"/>
+      <stop offset="65%" stop-color="#0B0A08"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="60" y="60" width="1080" height="510" fill="none" stroke="#C9A24B" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="100" y="330" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#F3EFE6">MH Production</text>
+  <text x="100" y="410" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-style="italic" fill="#C9A24B">&amp; Entertainment</text>
+  <text x="100" y="470" font-family="Courier New, monospace" font-size="22" letter-spacing="2" fill="#9A9282">INTERNATIONAL FILM PRODUCTION SUPPORT &amp; LOGISTICS</text>
+</svg>
