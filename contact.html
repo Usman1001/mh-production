@@ -32,7 +32,6 @@
 </head>
 <body>
 
-<!-- ============================= NAVBAR ============================= -->
 <header class="site-header">
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
@@ -62,7 +61,6 @@
 
 <main>
 
-  <!-- ============================= PAGE HEADER ============================= -->
   <section class="page-header">
     <div class="container">
       <span class="manifest-tag">Contact</span>
@@ -74,12 +72,10 @@
     </div>
   </section>
 
-  <!-- ============================= CONTACT ============================= -->
   <section class="section section-void">
     <div class="container">
       <div class="contact-grid">
 
-        <!-- Info column -->
         <div>
           <div class="contact-info-card glass-card reveal">
             <span class="manifest-tag">Business Information</span>
@@ -96,7 +92,7 @@
               <i class="bi bi-envelope"></i>
               <div>
                 <span class="label">Email</span>
-                <span class="value">info@mhproduction.lk</span>
+                <span class="value">info@mhproductions.lk</span>
               </div>
             </div>
             <div class="row-item">
@@ -119,24 +115,26 @@
             <a href="https://wa.me/94771234508" target="_blank" rel="noopener" class="btn-mh btn-mh-gold">
               <i class="bi bi-whatsapp"></i> WhatsApp
             </a>
-            <a href="mailto:info@mhproduction.lk" class="btn-mh btn-mh-ghost">
+            <a href="mailto:info@mhproductions.lk" class="btn-mh btn-mh-ghost">
               <i class="bi bi-envelope"></i> Email Us
             </a>
           </div>
 
           <div class="map-frame mt-4 reveal reveal-delay-2">
-            <!-- Replace with an embedded Google Map iframe pointing to the office location -->
             <i class="bi bi-map"></i>
             <span>Map location — Colombo, Sri Lanka</span>
           </div>
         </div>
 
-        <!-- Form column -->
         <div class="contact-form-card glass-card reveal reveal-delay-1">
           <span class="manifest-tag">Send An Enquiry</span>
           <h3 class="mt-3 mb-4" style="font-size:1.5rem;">Start a conversation</h3>
 
-          <form id="contactForm" novalidate>
+          <form id="contactForm" action="https://formsubmit.co/info@mhproductions.lk" method="POST" novalidate>
+            <input type="hidden" name="_subject" value="New Contact Form Enquiry - MH Production">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+
             <div class="row">
               <div class="col-md-6 form-floating-mh">
                 <label for="name">Full Name *</label>
@@ -170,7 +168,6 @@
 
 </main>
 
-<!-- ============================= FOOTER ============================= -->
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
@@ -209,7 +206,7 @@
         <h6>Get in Touch</h6>
         <ul>
           <li><i class="bi bi-geo-alt"></i> Colombo, Sri Lanka</li>
-          <li><i class="bi bi-envelope"></i> info@mhproduction.lk</li>
+          <li><i class="bi bi-envelope"></i> info@mhproductions.lk</li>
           <li><i class="bi bi-telephone"></i> <a href="tel:+94 77 123 4508">+94 77 123 4508</a></li>
           <li><i class="bi bi-whatsapp"></i> <a href="https://wa.me/94771234508" target="_blank" rel="noopener">Chat on WhatsApp</a></li>
         </ul>

@@ -7,10 +7,8 @@
    - animated statistic counters
    - back-to-top control
    - portfolio category filtering (portfolio.html only)
-   - contact form validation (contact.html only)
+   - contact form validation & submission (contact.html only)
    - active nav link + footer year
-   All code is defensive: every feature checks that its markup exists
-   before running, so this single file can be shared across all pages.
    ========================================================================= */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -52,13 +50,12 @@ function initMobileMenuClose() {
   if (!collapseEl || typeof bootstrap === 'undefined') return;
 
   var links = collapseEl.querySelectorAll('.nav-link');
-  var bsCollapse = null;
 
   links.forEach(function (link) {
     link.addEventListener('click', function () {
       if (window.innerWidth >= 992) return;
-      bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
-      bsCollapse.hide();
+      var bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+      if (bsCollapse) bsCollapse.hide();
     });
   });
 }
@@ -70,13 +67,17 @@ function initActiveNavLink() {
   var links = document.querySelectorAll('.navbar-nav .nav-link');
   if (!links.length) return;
 
-  var current = window.location.pathname.split('/').pop() || 'index.html';
+  var path = window.location.pathname.split('?')[0].split('#')[0];
+  var current = path.split('/').pop() || 'index.html';
 
   links.forEach(function (link) {
     var href = link.getAttribute('href');
     if (!href) return;
+    
+    var cleanHref = href.replace(/^\.\//, '');
+    
     link.classList.remove('active');
-    if (href === current || (current === '' && href === 'index.html')) {
+    if (cleanHref === current || (current === '' && cleanHref === 'index.html')) {
       link.classList.add('active');
       link.setAttribute('aria-current', 'page');
     }
@@ -85,8 +86,6 @@ function initActiveNavLink() {
 
 /* -------------------------------------------------------------------------
    Scroll reveal — fades/lifts elements with the `.reveal` class into view
-   using IntersectionObserver; falls back to showing everything immediately
-   if the API isn't available.
    ------------------------------------------------------------------------- */
 function initScrollReveal() {
   var items = document.querySelectorAll('.reveal');
@@ -112,7 +111,6 @@ function initScrollReveal() {
 /* -------------------------------------------------------------------------
    Animated counters — reads target value + optional suffix from data
    attributes and counts up once the block scrolls into view.
-   Markup: <span class="stat-num" data-count="40" data-suffix="+">0</span>
    ------------------------------------------------------------------------- */
 function initCounters() {
   var counters = document.querySelectorAll('[data-count]');
@@ -127,7 +125,7 @@ function initCounters() {
     function step(timestamp) {
       if (!start) start = timestamp;
       var progress = Math.min((timestamp - start) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3); /* ease-out-cubic */
+      var eased = 1 - Math.pow(1 - progress, 3);
       var value = Math.floor(eased * target);
       el.textContent = value + suffix;
       if (progress < 1) {
@@ -180,8 +178,7 @@ function initBackToTop() {
 }
 
 /* -------------------------------------------------------------------------
-   Portfolio filter — shows/hides manifest cards and section groups by
-   data-category. Only runs on portfolio.html where the markup exists.
+   Portfolio filter — shows/hides manifest cards and section groups safely
    ------------------------------------------------------------------------- */
 function initPortfolioFilter() {
   var filterBar = document.querySelector('.filter-bar');
@@ -207,16 +204,19 @@ function initPortfolioFilter() {
       cards.forEach(function (card) {
         var cardCategory = card.getAttribute('data-category');
         var show = filter === 'all' || filter === cardCategory;
-        card.closest('.col-6, .col-md-4, .col-lg-3').style.display = show ? '' : 'none';
+        
+        // Defensive wrapper check preventing null element access error
+        var wrapper = card.closest('.col-6, .col-md-4, .col-lg-3') || card.parentElement || card;
+        if (wrapper) {
+          wrapper.style.display = show ? '' : 'none';
+        }
       });
     });
   });
 }
 
 /* -------------------------------------------------------------------------
-   Contact form — lightweight client-side validation and a friendly status
-   message. No backend is wired up yet; this is ready for a future PHP
-   endpoint (see README.md) that would receive the same field names.
+   Contact form — client-side validation before sending data
    ------------------------------------------------------------------------- */
 function initContactForm() {
   var form = document.getElementById('contactForm');
@@ -225,8 +225,6 @@ function initContactForm() {
   var status = document.getElementById('formStatus');
 
   form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
     var name = form.querySelector('#name');
     var email = form.querySelector('#email');
     var message = form.querySelector('#message');
@@ -252,21 +250,26 @@ function initContactForm() {
       if (message) message.classList.add('is-invalid');
     }
 
-    if (!status) return;
-
-    status.classList.remove('ok', 'err');
-
     if (!isValid) {
-      status.textContent = 'Please complete the required fields marked above.';
-      status.classList.add('err', 'show');
+      e.preventDefault(); // Stop submission only if fields are missing or invalid
+      if (status) {
+        status.textContent = 'Please complete the required fields marked above.';
+        status.classList.remove('ok');
+        status.classList.add('err', 'show');
+      }
       return;
     }
 
-    /* Placeholder success flow. Swap this block for a fetch() call to a
-       PHP/MySQL endpoint when the backend is ready. */
-    status.textContent = 'Thank you — your message has been received. Our team will respond within 1–2 business days.';
-    status.classList.add('ok', 'show');
-    form.reset();
+    // Allow default form action to post to backend endpoint (FormSubmit/PHP)
+    if (!form.getAttribute('action')) {
+      e.preventDefault();
+      if (status) {
+        status.classList.remove('err');
+        status.textContent = 'Thank you — your message has been received.';
+        status.classList.add('ok', 'show');
+      }
+      form.reset();
+    }
   });
 }
 
