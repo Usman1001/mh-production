@@ -1,0 +1,20 @@
+# =========================================================================
+# MH Production & Entertainment — Robots Exclusion Protocol
+# Website: https://mhproductions.lk/
+# =========================================================================
+
+# Allow all well-behaved web crawlers
+User-agent: *
+
+# Block crawling of backend scripts and system directories
+Disallow: /cgi-bin/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+
+# Block crawling of raw asset folders and non-page endpoints
+Disallow: /assets/js/
+Disallow: /assets/css/
+
+# XML Sitemap Location
+Sitemap: https://mhproductions.lk/sitemap.xml
