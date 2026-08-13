@@ -281,3 +281,31 @@ function initFooterYear() {
   if (!yearEl) return;
   yearEl.textContent = new Date().getFullYear();
 }
+
+/* =========================================================
+   PAGE LOADER
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const loader = document.getElementById("pageLoader");
+
+  if (!loader) return;
+
+  window.addEventListener("load", function () {
+
+    // Keep the cinematic intro visible briefly
+    setTimeout(function () {
+
+      loader.classList.add("loaded");
+
+      // Remove it completely after fade-out
+      setTimeout(function () {
+        loader.remove();
+      }, 900);
+
+    }, 1800);
+
+  });
+
+});

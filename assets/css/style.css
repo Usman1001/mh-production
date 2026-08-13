@@ -1717,3 +1717,273 @@ button:focus-visible,
   }
   .reveal { opacity: 1; transform: none; }
 }
+/* =========================================================
+   CINEMATIC PAGE LOADER
+   ========================================================= */
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--void);
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.9s var(--ease),
+    visibility 0.9s ease;
+}
+
+.page-loader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+
+/* =========================
+   LOADER CONTENT
+   ========================= */
+
+.loader-content {
+  width: min(320px, 78vw);
+  text-align: center;
+}
+
+
+/* =========================
+   LOGO
+   ========================= */
+
+.loader-logo {
+  display: block;
+
+  width: 145px;
+  height: auto;
+
+  margin: 0 auto 34px;
+
+  opacity: 0;
+  transform: scale(0.92);
+
+  animation:
+    loaderLogoIn 1s var(--ease) forwards;
+}
+
+
+/* =========================
+   ANIMATED DOTS
+   ========================= */
+
+.loader-spinner {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  height: 16px;
+
+  margin-bottom: 22px;
+}
+
+.loader-spinner span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  opacity: 0.2;
+
+  animation: loaderDot 1.2s infinite var(--ease);
+}
+
+.loader-spinner span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loader-spinner span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.loader-spinner span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+
+/* =========================
+   LOADING LINE
+   ========================= */
+
+.loader-line {
+  position: relative;
+
+  width: 100%;
+  height: 1px;
+
+  overflow: hidden;
+
+  background: var(--line);
+
+  opacity: 0;
+
+  animation:
+    loaderFadeIn 0.6s ease 0.4s forwards;
+}
+
+.loader-line span {
+  position: absolute;
+
+  top: 0;
+  left: -40%;
+
+  width: 40%;
+  height: 100%;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 8px rgba(167, 195, 50, 0.45);
+
+  animation:
+    loaderLine 1.8s ease-in-out infinite;
+}
+
+
+/* =========================
+   LOADER LABEL
+   ========================= */
+
+.loader-text {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-top: 12px;
+
+  font-family: var(--font-mono);
+
+  font-size: 8px;
+  font-weight: 400;
+
+  letter-spacing: 0.2em;
+
+  color: var(--stone);
+
+  opacity: 0;
+
+  animation:
+    loaderFadeIn 0.6s ease 0.6s forwards;
+}
+
+
+/* =========================
+   ANIMATIONS
+   ========================= */
+
+@keyframes loaderLogoIn {
+
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+
+@keyframes loaderDot {
+
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+}
+
+
+@keyframes loaderLine {
+
+  0% {
+    left: -40%;
+  }
+
+  100% {
+    left: 100%;
+  }
+
+}
+
+
+@keyframes loaderFadeIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 576px) {
+
+  .loader-content {
+    width: 75vw;
+  }
+
+  .loader-logo {
+    width: 125px;
+    margin-bottom: 28px;
+  }
+
+}
+
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .page-loader,
+  .loader-logo,
+  .loader-spinner span,
+  .loader-line span,
+  .loader-text {
+    animation: none;
+  }
+
+  .loader-logo,
+  .loader-line,
+  .loader-text {
+    opacity: 1;
+  }
+
+}
