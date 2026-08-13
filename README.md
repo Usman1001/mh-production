@@ -76,7 +76,7 @@ No stock photography is bundled with this project — every poster, gallery tile
 | Gallery — Events | `assets/images/gallery/events-01.jpg` … | |
 | Gallery — Travel Operations | `assets/images/gallery/travel-01.jpg` … | |
 | Social share image | `assets/images/brand/og-cover.jpg` | Replace the SVG placeholder and update the `og:image` meta tag on every page (1200×630px) |
-| Favicon | `assets/images/brand/favicon.svg` | An "MH" monogram is included; replace with a real logo mark if preferred, or export a `.ico`/`.png` and update the `<link rel="icon">` tag on every page |
+| Favicon | `assets/images/brand/favicon.svg?v=2` | An "MH" monogram is included; replace with a real logo mark if preferred, or export a `.ico`/`.png` and update the `<link rel="icon">` tag on every page |
 
 To swap a CSS placeholder for a real photo, replace the placeholder `<div>` markup, e.g.:
 
