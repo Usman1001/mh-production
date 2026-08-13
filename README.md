@@ -11,11 +11,13 @@ MH-Production/
 │
 ├── index.html              Home
 ├── about.html               About / mission / vision / why us
-├── services.html            8 detailed services + process
+├── services.html            11 detailed services + process
 ├── portfolio.html           Bollywood / Hollywood / Arabic productions (filterable)
 ├── gallery.html             Categorised photo gallery
 ├── awards.html               Festival & awards timeline
 ├── contact.html              Contact form + business info
+├── 404.html                  Custom "page not found" error page
+├── .htaccess                 Apache config — routes missing URLs to 404.html
 │
 ├── assets/
 │   ├── css/
@@ -23,7 +25,8 @@ MH-Production/
 │   ├── js/
 │   │   └── script.js        Navbar, menu, reveal animation, counters, filters, form
 │   ├── images/
-│   │   ├── brand/            favicon.svg, og-cover.svg (logo mark, social share image)
+│   │   ├── brand/            logo.png, favicon.png, favicon-32.png, apple-touch-icon.png,
+│   │   │                      og-cover.svg (real logo + generated icon sizes)
 │   │   ├── portfolio/         (empty — add real movie stills here)
 │   │   └── gallery/            (empty — add real photography here)
 │   ├── videos/                (empty — add an optional hero background video here)
@@ -108,15 +111,44 @@ Get the embed code from Google Maps → Share → Embed a map, using the office 
 
 All design tokens live at the top of `assets/css/style.css` under `:root`:
 
-- **Colour** — `--void`, `--charcoal`, `--gold`, `--ivory`, etc.
+- **Colour** — `--void`, `--charcoal`, `--accent`, `--accent-bright`, `--ivory`, etc. `--accent` (`#A7C332`) is the brand lime green sampled from the logo — change this one token to re-theme every button, link, icon and highlight on the site.
 - **Type** — `--font-display` (Fraunces), `--font-body` (Inter), `--font-mono` (Space Mono)
 - **Spacing/radius** — `--section-y`, `--radius`
 
 Changing a token updates it site-wide. Fonts are loaded via Google Fonts `<link>` tags in each page `<head>`; swap the `href` and the `--font-*` variables together if you change typefaces.
 
+Note: a handful of CSS class names (`.btn-mh-gold`, `.text-gold`) kept their original "gold" naming for now even though they render the new green — renaming them is cosmetic only (their color already comes from `--accent`) and would mean touching every page for no visual change, so it's left as an easy future tidy-up rather than done here.
+
 ---
 
-## 7. Contact Form → Future PHP/MySQL Backend
+## 7. Brand Assets (Logo &amp; Favicon)
+
+The real "MH Film Production" logo you supplied is in use across the site:
+
+| File | Used for |
+|---|---|
+| `assets/images/brand/logo.png` | Navbar and footer brand mark (240×240, displayed at ~44px) |
+| `assets/images/brand/favicon.png` / `favicon-32.png` | Browser tab favicon |
+| `assets/images/brand/apple-touch-icon.png` | iOS/Android home-screen icon (180×180) |
+| `assets/images/brand/og-cover.svg` | Social share preview image (recoloured to match the new logo; replace with a real 1200×630 photo when available) |
+
+To swap the logo later, replace `logo.png` (and regenerate the favicon/apple-touch sizes from the new file) — no HTML changes are needed since every page references the same filenames.
+
+---
+
+## 8. 404 Page
+
+`404.html` matches the rest of the site's design and links back to Home, Contact and the main sections. `.htaccess` in the project root tells Apache-based shared hosting to serve it automatically:
+
+```
+ErrorDocument 404 /404.html
+```
+
+If your host doesn't run Apache (e.g. it's an Nginx or Node-based host), delete `.htaccess` and configure the equivalent custom-error-page setting in your hosting control panel instead.
+
+---
+
+## 9. Contact Form → Future PHP/MySQL Backend
 
 The form in `contact.html` (`#contactForm`) currently validates client-side only (see `initContactForm()` in `assets/js/script.js`) and shows a confirmation message without sending data anywhere, so the site works immediately on static hosting.
 
@@ -128,7 +160,7 @@ To wire it up to a backend once one is available:
 
 ---
 
-## 8. Credits
+## 10. Credits
 
 - [Bootstrap 5](https://getbootstrap.com/) — layout grid & components
 - [Bootstrap Icons](https://icons.getbootstrap.com/) — iconography
